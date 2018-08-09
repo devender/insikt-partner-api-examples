@@ -1,0 +1,1 @@
+This project showcases how to utilize insikt's partner api.
