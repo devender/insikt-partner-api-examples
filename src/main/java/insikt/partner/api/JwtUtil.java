@@ -1,4 +1,4 @@
-package insikt.partner.api.examples;
+package insikt.partner.api;
 
 import com.google.common.base.Preconditions;
 

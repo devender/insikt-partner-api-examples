@@ -19,7 +19,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-@SpringBootApplication
+import insikt.partner.api.JwtUtil;
+import insikt.partner.api.ObjectMapperFactory;
+
+@SpringBootApplication(scanBasePackages = "insikt.partner.api")
 public class Application {
 
     public static void main(String[] args) {
