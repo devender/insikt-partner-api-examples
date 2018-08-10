@@ -18,7 +18,9 @@ public class EchoExample implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.debug("Running Echo Example..");
+        log.debug("*********************************Running Echo Example.**********************************************");
         apiClient.echo("Hello");
+        log.debug("*********************************Done**********************************************");
+
     }
 }

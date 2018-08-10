@@ -19,6 +19,7 @@ public class PaymentExampleProperties {
     private String partnerTransactionId;
     private Double totalPaymentAmount;
     private String paymentMethod;
-    private Integer paymentMeanId;
     private String productAccountId;
+    private Integer paymentMeanId;
+
 }
