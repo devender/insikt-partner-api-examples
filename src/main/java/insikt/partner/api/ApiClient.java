@@ -96,6 +96,7 @@ public class ApiClient {
                                  String productAccountId,
                                  String authorizationId,
                                  Double transactionFee,
+                                 String paymentMethod,
                                  String source) {
 
         Map payment = new HashMap();
@@ -104,7 +105,7 @@ public class ApiClient {
         payment.put("partnerTransactionId", partnerTransactionId);
         payment.put("totalProducts", 1);
         payment.put("totalPaymentAmount", totalPaymentAmount);
-        payment.put("paymentMethod", "PAYNEARME");
+        payment.put("paymentMethod", paymentMethod);
         payment.put("paymentMeanId", 0);
         payment.put("paymentTransactionId", paymentTransactionId);
         payment.put("products",

@@ -57,6 +57,7 @@ public class PaymentExample implements CommandLineRunner {
                     paymentExampleProperties.getProductAccountId(),
                     partnerApiResponseOptional.get().getAuthorizationId(),
                     transactionFee,
+                    paymentExampleProperties.getPaymentMethod(),
                     constructSourceJsonString(ImmutableMap.of("key1", "value1"))
             );
             log.debug("submit successful ? {}", submitPayment);
