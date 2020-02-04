@@ -24,6 +24,9 @@ repositories {
 
 
 dependencies {
+    compileOnly "org.projectlombok:lombok:1.18.2"
+    annotationProcessor "org.projectlombok:lombok:1.18.2"
+
     compile 'org.springframework.boot:spring-boot-starter'
     compile 'org.springframework:spring-web'
     compile 'org.slf4j:slf4j-api:1.7.25'
@@ -36,6 +39,6 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.6'
     compile 'com.fasterxml.jackson.module:jackson-module-afterburner:2.9.6'
     compile 'commons-lang:commons-lang:2.6'
-    compileOnly 'org.projectlombok:lombok'
+
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

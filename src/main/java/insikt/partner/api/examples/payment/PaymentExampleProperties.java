@@ -1,4 +1,4 @@
-package insikt.partner.api.examples;
+package insikt.partner.api.examples.payment;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +21,6 @@ public class PaymentExampleProperties {
     private String paymentMethod;
     private String productAccountId;
     private Integer paymentMeanId;
+    private Integer partyId;
 
 }

@@ -1,4 +1,4 @@
-package insikt.partner.api.examples;
+package insikt.partner.api.examples.payment;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -10,23 +10,23 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import insikt.partner.api.ApiClient;
+import insikt.partner.api.PartnerApiClient;
 import insikt.partner.api.ObjectMapperFactory;
 import insikt.partner.api.PartnerApiAuthorizationResponse;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+//@Component
 @Slf4j
 @Order(2)
 public class PaymentExample implements CommandLineRunner {
 
     private static final ObjectMapper OBJECT_MAPPER = ObjectMapperFactory.newObjectMapper();
+
     @Autowired
-    private ApiClient apiClient;
+    private PartnerApiClient partnerApiClient;
 
     @Autowired
     private PaymentExampleProperties paymentExampleProperties;
@@ -35,9 +35,9 @@ public class PaymentExample implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.debug("*********************************Running Payment Example..**********************************************");
         log.debug("Properties to use for payment {}", paymentExampleProperties);
+        log.debug("Balance before payment {}", getBalance(paymentExampleProperties.getPartyId(), paymentExampleProperties.getProductAccountId()));
 
-
-        Optional<PartnerApiAuthorizationResponse> partnerApiResponseOptional = apiClient.authorize(paymentExampleProperties.getPartnerLocationId(),
+        Optional<PartnerApiAuthorizationResponse> partnerApiResponseOptional = partnerApiClient.authorize(paymentExampleProperties.getPartnerLocationId(),
                 paymentExampleProperties.getProviderTransactionId(),
                 paymentExampleProperties.getPartnerTransactionId(),
                 paymentExampleProperties.getTotalPaymentAmount(),
@@ -49,7 +49,7 @@ public class PaymentExample implements CommandLineRunner {
             log.debug("authorize succeeded , proceeding to submit");
             Double transactionFee = 0.0;
 
-            boolean submitPayment = apiClient.submitPayment(paymentExampleProperties.getPartnerLocationId(),
+            boolean submitPayment = partnerApiClient.submitPayment(paymentExampleProperties.getPartnerLocationId(),
                     paymentExampleProperties.getProviderTransactionId(),
                     paymentExampleProperties.getPartnerTransactionId(),
                     paymentExampleProperties.getTotalPaymentAmount(),
@@ -63,18 +63,22 @@ public class PaymentExample implements CommandLineRunner {
             log.debug("submit successful ? {}", submitPayment);
         }
 
+        log.debug("Balance after payment {}", getBalance(paymentExampleProperties.getPartyId(), paymentExampleProperties.getProductAccountId()));
         log.debug("*********************************Done..**********************************************");
     }
 
+    private Optional<Double> getBalance(Integer partyId, String productAccountId) {
+        Optional<Double> balance = Optional.empty();
+        Optional<Map<String, Object>> partyProductAccount = partnerApiClient.getPartyProductAccount(partyId, productAccountId);
+        if (partyProductAccount.isPresent() && partyProductAccount.get().containsKey("balance")) {
+            balance = Optional.ofNullable((Double) partyProductAccount.get().get("balance"));
+        }
+        return balance;
+    }
 
     static String constructSourceJsonString(Map<String, Object> params) {
-        Map<String, Object> source = new HashMap<>();
-        source.put("paymentType", params.get("payment_type"));
-        source.put("paymentLatitude", params.get("payment_latitude"));
-        source.put("paymentLongitude", params.get("payment_longitude"));
-
         try {
-            return OBJECT_MAPPER.writeValueAsString(source);
+            return OBJECT_MAPPER.writeValueAsString(params);
         } catch (JsonProcessingException e) {
             log.warn("Unable to generate JSON string for source", e);
             return "{}";

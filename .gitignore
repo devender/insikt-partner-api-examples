@@ -4,5 +4,16 @@ build
 *.ipr
 *.iws
 *.ids
+shell.sh
+testShell.sh
 out/
 .idea/
+scripts/output
+scripts/outputPrep
+/bin/
+.classpath
+.project
+.settings/
+*.DS_Store
+*/bin/
+*.tmp/

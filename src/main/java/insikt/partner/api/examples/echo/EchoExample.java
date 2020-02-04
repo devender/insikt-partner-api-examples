@@ -1,11 +1,11 @@
-package insikt.partner.api.examples;
+package insikt.partner.api.examples.echo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import insikt.partner.api.ApiClient;
+import insikt.partner.api.PartnerApiClient;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -14,12 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 public class EchoExample implements CommandLineRunner {
 
     @Autowired
-    private ApiClient apiClient;
+    private PartnerApiClient partnerApiClient;
 
     @Override
     public void run(String... args) throws Exception {
         log.debug("*********************************Running Echo Example.**********************************************");
-        apiClient.echo("Hello");
+        partnerApiClient.echo("Hello");
         log.debug("*********************************Done**********************************************");
 
     }
